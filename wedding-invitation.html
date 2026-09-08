@@ -218,6 +218,18 @@
     letter-spacing:.03em;
     opacity:0;
     animation: fadeUp .8s ease 1.85s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .wedding-date-line .date,
+  .wedding-date-line .time{ display: block; }
+  .wedding-date-line .golden-sep{
+    display: block;
+    width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
   .wedding-date-line .dot{ color: var(--gold); margin: 0 8px; }
 
@@ -826,7 +838,10 @@
       <h1 class="bride-name">Deva Dharshini SS</h1>
 
       <div class="wedding-date-line">
-        22 November 2026 <span class="dot">•</span> 7:45 AM – 8:45 AM
+        <span class="date">22 November 2026</span>
+        <span class="golden-sep"></span>
+        <span class="time">7:45 AM – 8:45 AM</span>
+        <span class="golden-sep"></span>
       </div>
     </div>
 
