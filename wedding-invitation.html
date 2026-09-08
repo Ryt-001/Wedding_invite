@@ -77,6 +77,89 @@
     opacity:.75;
   }
 
+  /* =========================================================
+     FESTIVE STRING LIGHTS — hanging colored bulbs
+     ========================================================= */
+  .lights{
+    position: relative;
+    width: 100%;
+    height: 40px;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 3;
+  }
+  /* the wire is a subtle golden sagging arc */
+  .lights::before{
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 2px;
+    height: 22px;
+    background:
+      radial-gradient(ellipse 60% 100% at 50% 0%,
+                      rgba(212,175,55,.55) 0%,
+                      rgba(212,175,55,.35) 40%,
+                      transparent 70%);
+    -webkit-mask: radial-gradient(ellipse 52% 130% at 50% -30%,
+                                  transparent 62%, #000 63%, #000 64%, transparent 65%);
+            mask: radial-gradient(ellipse 52% 130% at 50% -30%,
+                                  transparent 62%, #000 63%, #000 64%, transparent 65%);
+  }
+  /* bottom string flips so the wire sags upward toward the border */
+  .lights.bottom{ transform: scaleY(-1); }
+
+  .bulb{
+    position: absolute;
+    top: 12px;
+    width: 12px;
+    height: 16px;
+    border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
+    background: radial-gradient(circle at 35% 30%,
+                                var(--bulb-hi, #fff) 0%,
+                                var(--bulb, #d4af37) 55%,
+                                var(--bulb-lo, #7a5b1a) 100%);
+    box-shadow:
+      0 0 10px 2px var(--bulb-glow, rgba(212,175,55,.6)),
+      inset 0 -2px 3px rgba(0,0,0,.35);
+    transform: translateX(-50%);
+    animation: bulb-twinkle var(--dur, 2.6s) ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+  }
+  /* the little cap where the bulb meets the wire */
+  .bulb::before{
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 6px;
+    height: 4px;
+    margin-left: -3px;
+    background: linear-gradient(180deg, var(--gold-dim), #4a3510);
+    border-radius: 2px 2px 1px 1px;
+  }
+  @keyframes bulb-twinkle{
+    0%,100% {
+      opacity: .55;
+      box-shadow:
+        0 0 4px 1px var(--bulb-glow, rgba(212,175,55,.35)),
+        inset 0 -2px 3px rgba(0,0,0,.35);
+    }
+    50% {
+      opacity: 1;
+      box-shadow:
+        0 0 16px 5px var(--bulb-glow, rgba(212,175,55,.9)),
+        0 0 30px 8px var(--bulb-glow, rgba(212,175,55,.35)),
+        inset 0 -2px 3px rgba(0,0,0,.25);
+    }
+  }
+
+  /* color palette applied by index in JS */
+  .bulb.c-red    { --bulb:#e63946; --bulb-hi:#ffd6da; --bulb-lo:#5a0e15; --bulb-glow: rgba(230,57,70,.75); }
+  .bulb.c-gold   { --bulb:#f0c04a; --bulb-hi:#fff4c9; --bulb-lo:#6b4d10; --bulb-glow: rgba(240,192,74,.75); }
+  .bulb.c-green  { --bulb:#3ea36b; --bulb-hi:#c9f2d8; --bulb-lo:#123f27; --bulb-glow: rgba(62,163,107,.7); }
+  .bulb.c-blue   { --bulb:#3a8fd0; --bulb-hi:#d0e8fb; --bulb-lo:#0e3557; --bulb-glow: rgba(58,143,208,.7); }
+  .bulb.c-magenta{ --bulb:#d33c8c; --bulb-hi:#fbd0e5; --bulb-lo:#4d0f34; --bulb-glow: rgba(211,60,140,.7); }
+  .bulb.c-orange { --bulb:#f08a34; --bulb-hi:#ffdec2; --bulb-lo:#6a3608; --bulb-glow: rgba(240,138,52,.75); }
+
   /* ---------- HERO ---------- */
   .hero{
     padding: 46px 0 30px;
@@ -522,11 +605,235 @@
     .cd-num{ font-size: 27px; }
   }
 
+  /* =========================================================
+     SIDE POO-MALA — hanging flower garlands (left & right)
+     ========================================================= */
+  .poo-mala{
+    position: fixed;
+    top: 0;
+    width: 120px;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+  }
+  .poo-mala.left  { left: 0; }
+  .poo-mala.right { right: 0; }
+
+  /* whole garland hangs from a pin at the top and sways */
+  .mala-swing{
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 2px;
+    height: 92vh;
+    transform-origin: 50% 0;
+    animation: mala-swing 6.4s ease-in-out infinite;
+  }
+  .poo-mala.right .mala-swing{ animation-delay: -3.2s; }
+  @keyframes mala-swing{
+    0%,100% { transform: translateX(-50%) rotate(-2.4deg); }
+    50%     { transform: translateX(-50%) rotate( 2.4deg); }
+  }
+
+  /* golden cord */
+  .cord{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1.4px;
+    height: 100%;
+    margin-left: -0.7px;
+    background: linear-gradient(180deg,
+                var(--gold-dim) 0%,
+                var(--gold) 30%,
+                var(--gold-dim) 100%);
+    opacity: .85;
+  }
+
+  /* pin/knot where the garland attaches at top */
+  .mala-pin{
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold) 55%, var(--gold-dim));
+    box-shadow: 0 0 6px rgba(212,175,55,.55);
+  }
+
+  /* each flower on the strand */
+  .flower{
+    position: absolute;
+    left: 50%;
+    width: 46px;
+    height: 46px;
+    margin-left: -23px;
+    transform-origin: 50% 4px;                 /* rotate around cord attach point */
+    animation: flower-breathe 4.2s ease-in-out infinite;
+  }
+  .flower svg{ width: 100%; height: 100%; display: block; overflow: visible; }
+  .flower:nth-child(2n){ animation-duration: 5.1s; animation-delay: .4s; }
+  .flower:nth-child(3n){ animation-duration: 4.6s; animation-delay: .8s; }
+  .flower:nth-child(5n){ animation-duration: 5.4s; animation-delay: 1.1s; }
+  @keyframes flower-breathe{
+    0%,100% { transform: rotate(-4deg) scale(1);    }
+    50%     { transform: rotate( 4deg) scale(1.05); }
+  }
+
+  /* marigold — layered gold-orange pom */
+  .marigold .m-outer{ fill: #e8951f; }
+  .marigold .m-mid  { fill: var(--gold);      }
+  .marigold .m-inner{ fill: var(--vermilion); }
+  .marigold .m-core { fill: var(--gold-soft); }
+  .marigold .m-glint{
+    fill: #fff5d1;
+    opacity: 0;
+    animation: glint 3.6s ease-in-out infinite;
+  }
+  .flower:nth-child(4n) .m-glint{ animation-delay: 1.6s; }
+  .flower:nth-child(6n) .m-glint{ animation-delay: 2.4s; }
+  @keyframes glint{
+    0%, 70%, 100% { opacity: 0;   }
+    80%           { opacity: .95; }
+  }
+
+  /* jasmine — small ivory five-petal bud */
+  .jasmine .j-petal{ fill: var(--ivory); stroke: var(--gold-dim); stroke-width: .5; }
+  .jasmine .j-core { fill: var(--gold-soft); }
+
+  /* small green leaves tucked between blooms */
+  .leaflet{
+    position: absolute;
+    left: 50%;
+    width: 22px;
+    height: 14px;
+    margin-left: -11px;
+    transform-origin: 50% 2px;
+    animation: leaflet-flutter 5s ease-in-out infinite;
+  }
+  .leaflet svg{ width: 100%; height: 100%; display: block; }
+  .leaflet .lf{ fill: var(--temple-green); stroke: var(--gold-dim); stroke-width: .5; }
+  @keyframes leaflet-flutter{
+    0%,100% { transform: rotate(-6deg); }
+    50%     { transform: rotate( 6deg); }
+  }
+
+  /* brass bell at the bottom */
+  .bell-wrap{
+    position: absolute;
+    left: 50%;
+    bottom: 4vh;
+    width: 42px;
+    height: 60px;
+    margin-left: -21px;
+    transform-origin: 50% 0;
+    animation: bell-swing 3.2s ease-in-out infinite;
+  }
+  .poo-mala.right .bell-wrap{ animation-delay: -1.6s; }
+  @keyframes bell-swing{
+    0%,100% { transform: rotate(-10deg); }
+    50%     { transform: rotate( 10deg); }
+  }
+  .bell-wrap svg{ width: 100%; height: 100%; display: block; overflow: visible; }
+  .bell-body { fill: url(#brassGrad); stroke: var(--gold-dim); stroke-width: .8; }
+  .bell-rim  { fill: var(--gold);     stroke: var(--gold-dim); stroke-width: .8; }
+  .bell-cap  { fill: var(--gold-soft); stroke: var(--gold-dim); stroke-width: .6; }
+  .bell-clap {
+    fill: var(--maroon-darker);
+    transform-origin: 50% 6px;
+    animation: clap-swing 3.2s ease-in-out infinite;
+  }
+  .poo-mala.right .bell-clap{ animation-delay: -1.6s; }
+  @keyframes clap-swing{
+    0%,100% { transform: rotate( 14deg); }
+    50%     { transform: rotate(-14deg); }
+  }
+  .bell-shine{
+    fill: #fff5d1;
+    opacity: 0;
+    animation: glint 4.4s ease-in-out infinite .6s;
+  }
+
+  /* keep the garlands from crowding the invitation on narrow screens */
+  @media (max-width: 1024px){
+    .poo-mala{ display: none; }
+  }
 </style>
 </head>
 <body>
 
+<!-- reusable SVG defs for the brass bell gradient -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="brassGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#f2d888"/>
+      <stop offset="55%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#8a6a25"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============ SIDE POO-MALA (LEFT) ============ -->
+<aside class="poo-mala left" aria-hidden="true">
+  <div class="mala-swing" data-mala>
+    <span class="cord"></span>
+    <span class="mala-pin"></span>
+    <!-- flowers + leaves are injected here by JS -->
+
+    <!-- brass bell at the tail of the strand -->
+    <div class="bell-wrap">
+      <svg viewBox="0 0 42 60">
+        <!-- top cap / loop -->
+        <rect class="bell-cap" x="19" y="0"  width="4" height="6" rx="1"/>
+        <circle class="bell-cap" cx="21" cy="8" r="3"/>
+        <!-- bell body -->
+        <path class="bell-body"
+              d="M6 46
+                 C 6 24, 14 12, 21 12
+                 C 28 12, 36 24, 36 46 Z"/>
+        <!-- rim -->
+        <ellipse class="bell-rim" cx="21" cy="46" rx="15" ry="4"/>
+        <!-- clapper -->
+        <g class="bell-clap">
+          <line x1="21" y1="30" x2="21" y2="46" stroke="#59091f" stroke-width="1.2"/>
+          <circle cx="21" cy="48" r="3"/>
+        </g>
+        <!-- occasional highlight -->
+        <ellipse class="bell-shine" cx="14" cy="26" rx="2.4" ry="6" transform="rotate(-20 14 26)"/>
+      </svg>
+    </div>
+  </div>
+</aside>
+
+<!-- ============ SIDE POO-MALA (RIGHT) ============ -->
+<aside class="poo-mala right" aria-hidden="true">
+  <div class="mala-swing" data-mala>
+    <span class="cord"></span>
+    <span class="mala-pin"></span>
+    <div class="bell-wrap">
+      <svg viewBox="0 0 42 60">
+        <rect class="bell-cap" x="19" y="0"  width="4" height="6" rx="1"/>
+        <circle class="bell-cap" cx="21" cy="8" r="3"/>
+        <path class="bell-body"
+              d="M6 46
+                 C 6 24, 14 12, 21 12
+                 C 28 12, 36 24, 36 46 Z"/>
+        <ellipse class="bell-rim" cx="21" cy="46" rx="15" ry="4"/>
+        <g class="bell-clap">
+          <line x1="21" y1="30" x2="21" y2="46" stroke="#59091f" stroke-width="1.2"/>
+          <circle cx="21" cy="48" r="3"/>
+        </g>
+        <ellipse class="bell-shine" cx="14" cy="26" rx="2.4" ry="6" transform="rotate(-20 14 26)"/>
+      </svg>
+    </div>
+  </div>
+</aside>
+
 <div class="kolam-border"></div>
+<div class="lights top" data-lights aria-hidden="true"></div>
 
 <div class="wrap">
 
@@ -693,9 +1000,101 @@
 
 </div>
 
+<div class="lights bottom" data-lights aria-hidden="true"></div>
 <div class="kolam-border"></div>
 
 <script>
+  // ---------- build poo-mala strands ----------
+  (function(){
+    const marigoldSVG = `
+      <svg viewBox="-24 -24 48 48">
+        <g class="marigold">
+          <!-- outer petals ring -->
+          <g class="m-outer">
+            ${Array.from({length:12}).map((_,i)=>{
+              const a = (i/12)*Math.PI*2;
+              const cx = Math.cos(a)*11, cy = Math.sin(a)*11;
+              return `<circle cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" r="6"/>`;
+            }).join('')}
+          </g>
+          <!-- middle petals ring -->
+          <g class="m-mid">
+            ${Array.from({length:10}).map((_,i)=>{
+              const a = ((i+0.5)/10)*Math.PI*2;
+              const cx = Math.cos(a)*7, cy = Math.sin(a)*7;
+              return `<circle cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" r="4.4"/>`;
+            }).join('')}
+          </g>
+          <!-- inner tuft -->
+          <circle class="m-inner" cx="0" cy="0" r="5.2"/>
+          <circle class="m-core"  cx="0" cy="0" r="2.4"/>
+          <!-- occasional highlight -->
+          <ellipse class="m-glint" cx="-4" cy="-4" rx="2" ry="4" transform="rotate(-30 -4 -4)"/>
+        </g>
+      </svg>`;
+
+    const jasmineSVG = `
+      <svg viewBox="-16 -16 32 32">
+        <g class="jasmine">
+          ${Array.from({length:5}).map((_,i)=>{
+            const a = (i/5)*Math.PI*2 - Math.PI/2;
+            const cx = Math.cos(a)*6, cy = Math.sin(a)*6;
+            return `<ellipse class="j-petal" cx="${cx.toFixed(2)}" cy="${cy.toFixed(2)}" rx="5.5" ry="3.6" transform="rotate(${(i*72).toFixed(0)} ${cx.toFixed(2)} ${cy.toFixed(2)})"/>`;
+          }).join('')}
+          <circle class="j-core" cx="0" cy="0" r="2"/>
+        </g>
+      </svg>`;
+
+    const leafSVG = `
+      <svg viewBox="-12 -2 24 14">
+        <path class="lf" d="M -11 6 C -6 -1, 6 -1, 11 6 C 6 12, -6 12, -11 6 Z"/>
+        <path class="lf" d="M -11 6 L 11 6" fill="none" stroke="#a9863a" stroke-width=".4"/>
+      </svg>`;
+
+    // pattern: marigold, leaf, jasmine, leaf, marigold, jasmine, ...
+    const pattern = ['M','L','J','L','M','J','L','M','J','L','M','J','M','L'];
+
+    document.querySelectorAll('[data-mala]').forEach(mala => {
+      // leave the top ~4vh (pin area) and bottom ~11vh (bell area) untouched
+      const startPct = 5;
+      const endPct   = 82;
+      const step = (endPct - startPct) / (pattern.length - 1);
+
+      pattern.forEach((ch, i) => {
+        const el = document.createElement('div');
+        const top = (startPct + i * step).toFixed(2) + '%';
+        if (ch === 'L'){
+          el.className = 'leaflet';
+          el.innerHTML = leafSVG;
+        } else {
+          el.className = 'flower';
+          el.innerHTML = (ch === 'M') ? marigoldSVG : jasmineSVG;
+        }
+        el.style.top = top;
+        // slight per-flower rotation phase via inline delay
+        el.style.animationDelay = ((i % 5) * 0.35).toFixed(2) + 's';
+        mala.appendChild(el);
+      });
+    });
+  })();
+
+  // ---------- festive string lights ----------
+  (function(){
+    const colors = ['c-red','c-gold','c-green','c-blue','c-magenta','c-orange'];
+    document.querySelectorAll('[data-lights]').forEach(strip => {
+      const bulbs = 22;
+      for (let i = 0; i < bulbs; i++){
+        const b = document.createElement('span');
+        b.className = 'bulb ' + colors[i % colors.length];
+        const pct = 2 + (i * (96 / (bulbs - 1)));
+        b.style.left = pct.toFixed(2) + '%';
+        b.style.setProperty('--dur', (1.6 + Math.random() * 2.2).toFixed(2) + 's');
+        b.style.setProperty('--d',   (Math.random() * 2.5).toFixed(2) + 's');
+        strip.appendChild(b);
+      }
+    });
+  })();
+
   // ---------- falling petals ----------
   (function(){
     const container = document.getElementById('petals');
