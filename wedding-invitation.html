@@ -77,89 +77,6 @@
     opacity:.75;
   }
 
-  /* =========================================================
-     FESTIVE STRING LIGHTS — hanging colored bulbs
-     ========================================================= */
-  .lights{
-    position: relative;
-    width: 100%;
-    height: 40px;
-    pointer-events: none;
-    overflow: visible;
-    z-index: 3;
-  }
-  /* the wire is a subtle golden sagging arc */
-  .lights::before{
-    content: "";
-    position: absolute;
-    left: 0; right: 0; top: 2px;
-    height: 22px;
-    background:
-      radial-gradient(ellipse 60% 100% at 50% 0%,
-                      rgba(212,175,55,.55) 0%,
-                      rgba(212,175,55,.35) 40%,
-                      transparent 70%);
-    -webkit-mask: radial-gradient(ellipse 52% 130% at 50% -30%,
-                                  transparent 62%, #000 63%, #000 64%, transparent 65%);
-            mask: radial-gradient(ellipse 52% 130% at 50% -30%,
-                                  transparent 62%, #000 63%, #000 64%, transparent 65%);
-  }
-  /* bottom string flips so the wire sags upward toward the border */
-  .lights.bottom{ transform: scaleY(-1); }
-
-  .bulb{
-    position: absolute;
-    top: 12px;
-    width: 12px;
-    height: 16px;
-    border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
-    background: radial-gradient(circle at 35% 30%,
-                                var(--bulb-hi, #fff) 0%,
-                                var(--bulb, #d4af37) 55%,
-                                var(--bulb-lo, #7a5b1a) 100%);
-    box-shadow:
-      0 0 10px 2px var(--bulb-glow, rgba(212,175,55,.6)),
-      inset 0 -2px 3px rgba(0,0,0,.35);
-    transform: translateX(-50%);
-    animation: bulb-twinkle var(--dur, 2.6s) ease-in-out infinite;
-    animation-delay: var(--d, 0s);
-  }
-  /* the little cap where the bulb meets the wire */
-  .bulb::before{
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    width: 6px;
-    height: 4px;
-    margin-left: -3px;
-    background: linear-gradient(180deg, var(--gold-dim), #4a3510);
-    border-radius: 2px 2px 1px 1px;
-  }
-  @keyframes bulb-twinkle{
-    0%,100% {
-      opacity: .55;
-      box-shadow:
-        0 0 4px 1px var(--bulb-glow, rgba(212,175,55,.35)),
-        inset 0 -2px 3px rgba(0,0,0,.35);
-    }
-    50% {
-      opacity: 1;
-      box-shadow:
-        0 0 16px 5px var(--bulb-glow, rgba(212,175,55,.9)),
-        0 0 30px 8px var(--bulb-glow, rgba(212,175,55,.35)),
-        inset 0 -2px 3px rgba(0,0,0,.25);
-    }
-  }
-
-  /* color palette applied by index in JS */
-  .bulb.c-red    { --bulb:#e63946; --bulb-hi:#ffd6da; --bulb-lo:#5a0e15; --bulb-glow: rgba(230,57,70,.75); }
-  .bulb.c-gold   { --bulb:#f0c04a; --bulb-hi:#fff4c9; --bulb-lo:#6b4d10; --bulb-glow: rgba(240,192,74,.75); }
-  .bulb.c-green  { --bulb:#3ea36b; --bulb-hi:#c9f2d8; --bulb-lo:#123f27; --bulb-glow: rgba(62,163,107,.7); }
-  .bulb.c-blue   { --bulb:#3a8fd0; --bulb-hi:#d0e8fb; --bulb-lo:#0e3557; --bulb-glow: rgba(58,143,208,.7); }
-  .bulb.c-magenta{ --bulb:#d33c8c; --bulb-hi:#fbd0e5; --bulb-lo:#4d0f34; --bulb-glow: rgba(211,60,140,.7); }
-  .bulb.c-orange { --bulb:#f08a34; --bulb-hi:#ffdec2; --bulb-lo:#6a3608; --bulb-glow: rgba(240,138,52,.75); }
-
   /* ---------- HERO ---------- */
   .hero{
     padding: 46px 0 30px;
@@ -833,7 +750,6 @@
 </aside>
 
 <div class="kolam-border"></div>
-<div class="lights top" data-lights aria-hidden="true"></div>
 
 <div class="wrap">
 
@@ -1000,7 +916,6 @@
 
 </div>
 
-<div class="lights bottom" data-lights aria-hidden="true"></div>
 <div class="kolam-border"></div>
 
 <script>
@@ -1075,23 +990,6 @@
         el.style.animationDelay = ((i % 5) * 0.35).toFixed(2) + 's';
         mala.appendChild(el);
       });
-    });
-  })();
-
-  // ---------- festive string lights ----------
-  (function(){
-    const colors = ['c-red','c-gold','c-green','c-blue','c-magenta','c-orange'];
-    document.querySelectorAll('[data-lights]').forEach(strip => {
-      const bulbs = 22;
-      for (let i = 0; i < bulbs; i++){
-        const b = document.createElement('span');
-        b.className = 'bulb ' + colors[i % colors.length];
-        const pct = 2 + (i * (96 / (bulbs - 1)));
-        b.style.left = pct.toFixed(2) + '%';
-        b.style.setProperty('--dur', (1.6 + Math.random() * 2.2).toFixed(2) + 's');
-        b.style.setProperty('--d',   (Math.random() * 2.5).toFixed(2) + 's');
-        strip.appendChild(b);
-      }
     });
   })();
 
