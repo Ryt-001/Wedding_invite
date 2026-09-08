@@ -674,9 +674,23 @@
     animation: glint 4.4s ease-in-out infinite .6s;
   }
 
-  /* keep the garlands from crowding the invitation on narrow screens */
+  /* scale the garlands down on tablets so they don't crowd content */
   @media (max-width: 1024px){
-    .poo-mala{ display: none; }
+    .poo-mala { width: 82px; }
+    .flower   { width: 34px; height: 34px; margin-left: -17px; }
+    .leaflet  { width: 18px; height: 12px; margin-left: -9px; }
+    .bell-wrap{ width: 32px; height: 46px; margin-left: -16px; }
+    .mala-pin { width: 10px; height: 10px; margin-left: -5px; }
+    .wrap     { padding-left: 70px; padding-right: 70px; }
+  }
+  /* even slimmer on phones — garlands stay visible at the edges */
+  @media (max-width: 560px){
+    .poo-mala { width: 44px; }
+    .flower   { width: 24px; height: 24px; margin-left: -12px; }
+    .leaflet  { width: 14px; height: 10px; margin-left: -7px; }
+    .bell-wrap{ width: 24px; height: 34px; margin-left: -12px; }
+    .mala-pin { width: 8px;  height: 8px;  margin-left: -4px; }
+    .wrap     { padding-left: 38px; padding-right: 38px; }
   }
 </style>
 </head>
